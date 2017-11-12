@@ -1,33 +1,33 @@
-/tmp/ccpmfiJm.o: na função `main':
+/tmp/ccZJm0fU.o: na função `main':
 main.c:(.text+0x8c): referência indefinida a `menu'
 main.c:(.text+0xcd): referência indefinida a `subMenuLaboratorios'
 main.c:(.text+0x172): referência indefinida a `subMenuEquipamentos'
 main.c:(.text+0x27a): referência indefinida a `subMenuAvarias'
-/tmp/ccpmfiJm.o: na função `inserirEquipamento':
+/tmp/ccZJm0fU.o: na função `inserirEquipamento':
 main.c:(.text+0x45a): referência indefinida a `lerInteiro'
 main.c:(.text+0x532): referência indefinida a `lerString'
 main.c:(.text+0x572): referência indefinida a `lerString'
 main.c:(.text+0x638): referência indefinida a `lerFloat'
-/tmp/ccpmfiJm.o: na função `alterarEquipamento':
+/tmp/ccZJm0fU.o: na função `alterarEquipamento':
 main.c:(.text+0x6fc): referência indefinida a `lerInteiro'
 main.c:(.text+0x753): referência indefinida a `menuAlterarEquipamento'
 main.c:(.text+0x80e): referência indefinida a `lerString'
 main.c:(.text+0x850): referência indefinida a `lerString'
 main.c:(.text+0x890): referência indefinida a `lerFloat'
-/tmp/ccpmfiJm.o: na função `consultaEquipamentoNrInventario':
+/tmp/ccZJm0fU.o: na função `consultaEquipamentoNrInventario':
 main.c:(.text+0xae5): referência indefinida a `lerInteiro'
-/tmp/ccpmfiJm.o: na função `inserirLaboratorio':
+/tmp/ccZJm0fU.o: na função `inserirLaboratorio':
 main.c:(.text+0xbf1): referência indefinida a `lerString'
 main.c:(.text+0xc6d): referência indefinida a `lerString'
 main.c:(.text+0xca4): referência indefinida a `lerInteiro'
-/tmp/ccpmfiJm.o: na função `alterarLaboratorio':
+/tmp/ccZJm0fU.o: na função `alterarLaboratorio':
 main.c:(.text+0xe5b): referência indefinida a `lerString'
 main.c:(.text+0xec3): referência indefinida a `menuAlterarLaboratorio'
 main.c:(.text+0xef0): referência indefinida a `lerString'
 main.c:(.text+0xf56): referência indefinida a `lerInteiro'
-/tmp/ccpmfiJm.o: na função `consultaLaboratorioDesignacao':
+/tmp/ccZJm0fU.o: na função `consultaLaboratorioDesignacao':
 main.c:(.text+0x10dd): referência indefinida a `lerString'
-/tmp/ccpmfiJm.o: na função `lerData':
+/tmp/ccZJm0fU.o: na função `lerData':
 main.c:(.text+0x145d): referência indefinida a `lerInteiro'
 main.c:(.text+0x1476): referência indefinida a `lerInteiro'
 main.c:(.text+0x1533): referência indefinida a `lerInteiro'

@@ -5,7 +5,7 @@
 #include "funcoesAuxiliares.h"
 
 
-// ----------------------- FUNÇÕES AUXILIARES ------------------------------------------
+// ----------------------- FUNï¿½ï¿½ES AUXILIARES ------------------------------------------
 
 
 void lerString(char msg[TEXTO_LONGO], char str[TEXTO_LONGO], int tamanho)
@@ -111,5 +111,3 @@ void limparBuffer (void)
     }
     while (lixo != '\n' && lixo != EOF);
 }
-
-

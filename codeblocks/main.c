@@ -10,43 +10,45 @@
 
 typedef struct
 {
-    int dia, mes, ano;
+        int dia, mes, ano;
 } tipoData;
 
 typedef struct
 {
-    char matricula[TEXTO_BREVE];   // valor �nico
-    tipoData dataFabrico;
-    int cargaMaxima;
-    char estado[TEXTO_BREVE];
+        char matricula[TEXTO_BREVE]; // valor �nico
+        tipoData dataFabrico;
+        int cargaMaxima;
+        char estado[TEXTO_BREVE];
 } tipoVeiculo;
 
 typedef struct
 {
-    int numeroRegisto;   // valor �nico
-    tipoData dataRegisto;
-    int pesoEncomenda;
-    char estado[TEXTO_BREVE];
-    tipoData dataEntregaOuDevolucao;
-    char observacoesEncomenda[TEXTO_LONGO];
+        int numeroRegisto; // valor �nico
+        tipoData dataRegisto;
+        int pesoEncomenda;
+        char estado[TEXTO_BREVE];
+        tipoData dataEntregaOuDevolucao;
+        char observacoesEncomenda[TEXTO_LONGO];
 } tipoEncomenda;
 
 
 int main(void)
 {
-  tipoVeiculo vetorVeiculos[MAX_VEICULOS];
-  tipoEncomenda vetorEncomendas[MAX_ENCOMENDAS];
+        tipoVeiculo vetorVeiculos[MAX_VEICULOS];
+        tipoEncomenda vetorEncomendas[MAX_ENCOMENDAS];
 
-  char opc;
+        char opc;
 
 
-  opc = menu();
-  switch (opc) {
-    case 'V': //TODO submenuVeiculos
-      break;
-    case 'E': //TODO submenu encomendas
-      break;
+        opc = menu();
+        switch (opc) {
+        case 'V': //TODO submenuVeiculos
+                printf("Pressionaste o V\n");
+                break;
+        case 'E': //TODO submenu encomendas
+                printf("Pressionaste o B\n");
+                break;
 
-  }
+        }
 
 }

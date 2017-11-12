@@ -1,0 +1,38 @@
+# depslib dependency file v1.0
+1510479672 source:/home/betterkiller/works/estg/programacao-i/codeblocks/funcoesAuxiliares.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<ctype.h>
+	"funcoesAuxiliares.h"
+
+1510479672 /home/betterkiller/works/estg/programacao-i/codeblocks/funcoesAuxiliares.h
+
+1510479758 source:/home/betterkiller/works/estg/programacao-i/codeblocks/funcoesMenus.c
+	<stdio.h>
+	<ctype.h>
+	"funcoesMenus.h"
+	"funcoesAuxiliares.h"
+
+1510479882 /home/betterkiller/works/estg/programacao-i/codeblocks/funcoesMenus.h
+
+1510482308 source:/home/betterkiller/works/estg/programacao-i/codeblocks/main.c
+	<stdio.h>
+	<stdlib.h>
+	<ctype.h>
+	"funcoesMenus.c"
+	"funcoesAuxiliares.c"
+
+1510479758 /home/betterkiller/works/estg/programacao-i/codeblocks/funcoesMenus.c
+	<stdio.h>
+	<ctype.h>
+	"funcoesMenus.h"
+	"funcoesAuxiliares.h"
+
+1510479672 /home/betterkiller/works/estg/programacao-i/codeblocks/funcoesAuxiliares.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<ctype.h>
+	"funcoesAuxiliares.h"
+
