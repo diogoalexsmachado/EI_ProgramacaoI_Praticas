@@ -1,0 +1,6 @@
+#ifndef FUNCOESMENUS_H_INCLUDED
+#define FUNCOESMENUS_H_INCLUDED
+
+char menu ();
+
+#endif // FUNCOESMENUS_H_INCLUDED

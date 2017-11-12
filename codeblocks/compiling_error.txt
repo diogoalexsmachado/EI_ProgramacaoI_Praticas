@@ -1,0 +1,3 @@
+/tmp/ccwkWSgl.o: na função `main':
+main.c:(.text+0x20): referência indefinida a `menu'
+collect2: error: ld returned 1 exit status

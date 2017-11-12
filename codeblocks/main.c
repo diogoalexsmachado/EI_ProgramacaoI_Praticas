@@ -1,12 +1,12 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <ctype.h>
+
+#include "funcoesMenus.h"
+#include "funcoesAuxiliares.h"
 
 #define MAX_VEICULOS 10
 #define MAX_ENCOMENDAS 100
-
-#define TEXTO_BREVE 32
-#define TEXTO_LONGO 256
-
 
 typedef struct
 {
@@ -34,9 +34,19 @@ typedef struct
 
 int main(void)
 {
-    int input=0;
-    printf("Escreve:");
-    scanf("%d", &input);
-    printf("O teu input: %d\n", input);
-    return 0;
+  tipoVeiculo vetorVeiculos[MAX_VEICULOS];
+  tipoEncomenda vetorEncomendas[MAX_ENCOMENDAS];
+
+  char opc;
+
+
+  opc = menu();
+  switch (opc) {
+    case 'V': //TODO submenuVeiculos
+      break;
+    case 'E': //TODO submenu encomendas
+      break;
+
+  }
+
 }
