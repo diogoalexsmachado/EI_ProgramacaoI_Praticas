@@ -2,6 +2,8 @@
 #include <stdlib.h>
 #include <ctype.h>
 
+#define NAO_EXISTE -1    // Valor devolvido pelas fun��es procurar(...) quando o laborat�rio, equipamento ou avaria n�o existem no respetivo vetor
+
 #include "funcoesMenus.h"
 #include "funcoesAuxiliares.h"
 
@@ -10,45 +12,130 @@
 
 typedef struct
 {
-        int dia, mes, ano;
+    int dia, mes, ano;
 } tipoData;
 
 typedef struct
 {
-        char matricula[TEXTO_BREVE]; // valor �nico
-        tipoData dataFabrico;
-        int cargaMaxima;
-        char estado[TEXTO_BREVE];
+    char matricula[TEXTO_BREVE]; // valor �nico
+    tipoData dataFabrico;
+    int cargaMaxima;
+    char estado[TEXTO_BREVE];
 } tipoVeiculo;
 
 typedef struct
 {
-        int numeroRegisto; // valor �nico
-        tipoData dataRegisto;
-        int pesoEncomenda;
-        char estado[TEXTO_BREVE];
-        tipoData dataEntregaOuDevolucao;
-        char observacoesEncomenda[TEXTO_LONGO];
+    int numeroRegisto; // valor �nico
+    tipoData dataRegisto;
+    int pesoEncomenda;
+    char estado[TEXTO_BREVE];
+    tipoData dataEntregaOuDevolucao;
+    char observacoesEncomenda[TEXTO_LONGO];
 } tipoEncomenda;
 
 
 int main(void)
 {
-        tipoVeiculo vetorVeiculos[MAX_VEICULOS];
-        tipoEncomenda vetorEncomendas[MAX_ENCOMENDAS];
+    tipoVeiculo vetorVeiculos[MAX_VEICULOS];
+    tipoEncomenda vetorEncomendas[MAX_ENCOMENDAS];
 
-        char opc;
+    char opc;
+    int subOpc, quantVeiculos, quantEncomendas;
 
+    do
+    {
 
         opc = menu();
-        switch (opc) {
-        case 'V': //TODO submenuVeiculos
-                printf("Pressionaste o V\n");
-                break;
-        case 'E': //TODO submenu encomendas
-                printf("Pressionaste o B\n");
-                break;
-
+        switch (opc)
+        {
+        case 'V':
+            do
+            {
+                subOpc = menuVeiculos(); // chama o menu dos veiculos
+                switch (subOpc)
+                {
+                case 1: // inserir veiculo
+                    break;
+                case 2: //consultar veiculo
+                    break;
+                case 3: //listar veiculos
+                    break;
+                }
+            }
+            while (subOpc != 0);
+            break;
+        case 'E':
+            do
+            {
+                subOpc = menuEncomendas(); // chama o menu dos encomendas
+                switch (subOpc)
+                {
+                case 1: // inserir encomenda
+                    break;
+                case 2: //consultar encomenda
+                    break;
+                case 3: //listar encomendas
+                    break;
+                case 4: //eliminar encomenda
+                    break;
+                case 5: //alterar destino encomenda
+                    break;
+                }
+            }
+            while (subOpc != 0);
+            break;
         }
+    }
+    while (opc != 'S');
+}
 
+void inserirVeiculo (tipoVeiculo vetorVeiculos[MAX_VEICULOS], int *quantVeiculos)
+{
+    int posicao;
+
+    if (*quantVeiculos == MAX_VEICULOS)
+    {
+        printf("\n\nATENCAO: Impossivel inserir um novo Veiculo (MAXIMO atingido).\n");
+    }
+    else
+    {
+        do{
+            printf("\n\n----------- INSERIR/INVENTARIAR VEICULOS -----------  \n");
+            vetorVeiculos[*quantVeiculos].matricula = lerString("\nMATRICULA: ", vetorVeiculos[*quantVeiculos].matricula, 8);
+
+            posicao = procuraVeiculo(vetorVeiculos, *quantVeiculos, vetorVeiculos[*quantVeiculos].matricula);
+
+            if (posicao == NAO_EXISTE)  // Equipamento n�o existe no vetor
+            {
+                vetorVeiculos[*quantVeiculos].matricula= lerString("\nMatricula: ", vetorVeiculos[*quantVeiculos].matricula, 8);
+                printf("\nData de Fabrico: ");
+                vetorVeiculos[*quantVeiculos].dataFabrico = lerData();
+                vetorVeiculos[*quantVeiculos].cargaMaxima = lerInteiro("\nCusto do Equipamento: ", 0, 9999);
+                vetorVeiculos[*quantVeiculos].estado = ESTADO_DISPONIVEL;
+                (*quantVeiculos)++;
+            }
+            else
+            {
+                printf("\n\nATENCAO: O veiculo com essa matricula ja existe: %s\n", vetorVeiculos[*quantVeiculos].matricula);
+            }
+        } while (posicao != NAO_EXISTE);
+    }
+}
+
+int procuraVeiculo (tipoVeiculo vetorVeiculos[MAX_VEICULOS], int quantVeiculos, char matricula[8])
+{
+    int posicao, i;
+
+    posicao=NAO_EXISTE;
+
+    for (i=0; i < quantVeiculos; i++)
+    {
+        if (strcmp(vetorVeiculos[i].matricula,matricula) == 0)
+        {
+            posicao = i;
+            i = quantVeiculos;
+        }
+    }
+
+    return posicao;
 }

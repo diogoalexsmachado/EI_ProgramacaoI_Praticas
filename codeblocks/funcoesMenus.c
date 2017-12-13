@@ -31,7 +31,7 @@ char menu ()
             printf("\nERRO: opcao desconhecida. Tente novamente.\n");
         }
     }
-    while (opc != 'G' && opc != 'E' && opc != 'S' && opc != 'F' && opc != 'R');
+    while (opc != 'V' && opc != 'E' && opc != 'S' && opc != 'F' && opc != 'R');
 
     return opc;
 }
@@ -43,26 +43,12 @@ char menuVeiculos ()
 
     printf("\n\n\n\n-------------------------------------------------------------------------\n");
     printf("\n\n------------ MENU VEICULOS---------------------------------------------\n");
-    printf("\n\tI - Inserir Veiculo\n");
-    printf("\tC - Consultar Veiculo\n");
-    printf("\tL - Listar Veiculos\n");
+    printf("\n\t1 - Inserir Veiculo\n");
+    printf("\t2 - Consultar Veiculo\n");
+    printf("\t3 - Listar Veiculos\n");
+    printf("\n\t0 - VOLTAR ATRAS\n");
 
-    printf("\n\tX - VOLTAR ATRAS\n");
-
-    do
-    {
-
-        printf("\n\t\tOPCAO --> ");
-        scanf(" %c", &opc);
-        opc = toupper(opc);
-
-        if (opc != 'V' && opc != 'E' && opc != 'S' && opc != 'F' && opc != 'R')
-        {
-            printf("\nERRO: opcao desconhecida. Tente novamente.\n");
-        }
-    }
-    while (opc != 'G' && opc != 'E' && opc != 'S' && opc != 'F' && opc != 'R');
-
+    opc = lerInteiro("\n\t\tOPCAO --> ", 0, 4);
     return opc;
 }
 
@@ -72,27 +58,15 @@ char menuEncomendas ()
 
     printf("\n\n\n\n-------------------------------------------------------------------------\n");
     printf("\n\n------------ MENU ENCOMENDAS---------------------------------------------\n");
-    printf("\n\tI - Inserir Encomenda\n");
-    printf("\tC - Consultar Encomenda\n");
-    printf("\tL - Listar Encomendas\n");
-    printf("\tE - Eliminar Encomenda\n");
-    printf("\tA - Alterar Destino Encomenda\n");
+    printf("\n\t1 - Inserir Encomenda\n");
+    printf("\t2 - Consultar Encomenda\n");
+    printf("\t3 - Listar Encomendas\n");
+    printf("\t4 - Eliminar Encomenda\n");
+    printf("\t5 - Alterar Destino Encomenda\n");
 
-    printf("\n\tX - VOLTAR ATRAS\n");
+    printf("\n\t0 - VOLTAR ATRAS\n");
 
-    do
-    {
-
-        printf("\n\t\tOPCAO --> ");
-        scanf(" %c", &opc);
-        opc = toupper(opc);
-
-        if (opc != 'V' && opc != 'E' && opc != 'S' && opc != 'F' && opc != 'R')
-        {
-            printf("\nERRO: opcao desconhecida. Tente novamente.\n");
-        }
-    }
-    while (opc != 'G' && opc != 'E' && opc != 'S' && opc != 'F' && opc != 'R');
+    opc = lerInteiro("\n\t\tOPCAO --> ", 0, 5);
 
     return opc;
 }
