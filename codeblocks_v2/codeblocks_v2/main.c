@@ -3,7 +3,7 @@
 #include <ctype.h>
 
 #define NAO_EXISTE -1    // Valor devolvido pelas fun��es procurar(...) quando o laborat�rio, equipamento ou avaria n�o existem no respetivo vetor
-#define ESTADO_DISPONIVEL "Y"
+#define ESTADO_DISPONIVEL -1
 
 #define ANO_MIN 1900
 #define ANO_MAX 2500
@@ -14,12 +14,12 @@
 #define MAX_VEICULOS 10
 #define MAX_ENCOMENDAS 100
 
-typedef struct
+typedef struct //tipoData
 {
     int dia, mes, ano;
 } tipoData;
 
-typedef struct
+typedef struct //tipoVeiculo
 {
     char matricula[TEXTO_BREVE]; // valor �nico
     tipoData dataFabrico;
@@ -27,7 +27,7 @@ typedef struct
     char estado[TEXTO_BREVE];
 } tipoVeiculo;
 
-typedef struct
+typedef struct //encomendas
 {
     int numeroRegisto; // valor �nico
     tipoData dataRegisto;
@@ -37,12 +37,10 @@ typedef struct
     char observacoesEncomenda[TEXTO_LONGO];
 } tipoEncomenda;
 
-
-
 //Declaração das funções
 tipoData lerData (void);
 void inserirVeiculo (tipoVeiculo vetorVeiculos[MAX_VEICULOS], int *quantVeiculos);
-
+int procuraVeiculo (tipoVeiculo vetorVeiculos[MAX_VEICULOS], int quantVeiculos, char matricula[8]);
 
 int main(void)
 {
