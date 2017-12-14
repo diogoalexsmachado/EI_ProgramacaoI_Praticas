@@ -16,12 +16,14 @@
 #define MAX_VEICULOS 10
 #define MAX_ENCOMENDAS 100
 
-typedef struct //tipoData
+//tipoData
+typedef struct
 {
     int dia, mes, ano;
 } tipoData;
 
-typedef struct //tipoVeiculo
+//tipoVeiculo
+typedef struct
 {
     char matricula[TEXTO_BREVE]; // valor �nico
     tipoData dataFabrico;
@@ -29,7 +31,8 @@ typedef struct //tipoVeiculo
     int estado;
 } tipoVeiculo;
 
-typedef struct //tipoEncomenda
+//tipoEncomenda
+typedef struct
 {
     int numeroRegisto; // valor �nico
     tipoData dataRegisto;
@@ -88,6 +91,7 @@ int main(void)
                 switch (subOpc)
                 {
                 case 1: // inserir encomenda
+                    inserirEncomenda(vetorEncomendas, &quantEncomendas);
                     break;
                 case 2: //consultar encomenda
                     break;
@@ -106,6 +110,7 @@ int main(void)
     while (opc != 'S');
 }
 
+///////////////////////////////////////////FUNÇOES VEICULOS/////////////////////////////////////////////////////////
 //Função que permite adicionar um veiculo se ele não existir
 void inserirVeiculo (tipoVeiculo vetorVeiculos[MAX_VEICULOS], int *quantVeiculos)
 {
@@ -172,7 +177,7 @@ void escreveDadosVeiculo(tipoVeiculo veiculo, int cabecalho)
         printf("__________________________________________________________\n");
     }
 
-    printf("%s\t\t\t", veiculo.matricula);
+    printf("%8s\t\t\t", veiculo.matricula);
     escreveData(veiculo.dataFabrico);
     printf("\t%d", veiculo.cargaMaxima);
     switch (veiculo.estado)
@@ -242,6 +247,65 @@ int procuraVeiculo (tipoVeiculo vetorVeiculos[MAX_VEICULOS], int quantVeiculos, 
     return posicao;
 }
 
+///////////////////////////////////////////FUNÇOES VEICULOS/////////////////////////////////////////////////////////
+//Função que permite adicionar uma encomenda se ela não existir
+void inserirEncomenda (tipoEncomenda vetorEncomendas[MAX_ENCOMENDAS], int *quantEncomendas)
+{
+    int posicao;
+
+    if (*quantEncomendas == MAX_ENCOMENDAS)
+    {
+        printf("\n\nATENCAO: Impossivel inserir uma nova encomenda (MAXIMO atingido).\n");
+    }
+    else
+    {
+        do
+        {
+            printf("\n\n----------- INSERIR/INVENTARIAR VEICULOS -----------  \n");
+            vetorEncomendas[*quantEncomendas].numeroRegisto = lerInteiro("\nID ENCOMENDA: ", 1,16);
+
+            posicao = procuraVeiculo(vetorEncomendas, *quantEncomendas, vetorEncomendas[*quantEncomendas].numeroRegisto);
+/*
+            if (posicao == NAO_EXISTE)  // Equipamento n�o existe no vetor
+            {
+
+                printf("\nData de Fabrico: ");
+                vetorEncomendas[*quantEncomendas].dataFabrico = lerData();
+                vetorEncomendas[*quantEncomendas].cargaMaxima = lerInteiro("\nCarga maxima: ", 0, 9999);
+                vetorEncomendas[*quantEncomendas].estado = ESTADO_DISPONIVEL;
+                (*quantEncomendas)++;
+
+            }
+            else
+            {
+                printf("\n\nATENCAO: O veiculo com essa matricula ja existe: %s\n", vetorEncomendas[*quantEncomendas].matricula);
+            }*/
+        }
+        while (posicao != NAO_EXISTE);
+    }
+}
+
+//função para procurar veiculos e retorna a posição no vetor
+int procuraEncomenda(tipoEncomenda vetorEncomendas[MAX_ENCOMENDAS], int quantEncomendas, char numeroRegisto)
+{
+    int posicao, i;
+
+    posicao=NAO_EXISTE;
+
+    for (i=0; i < quantEncomendas; i++)
+    {
+        if (strcmp(vetorEncomendas[i].numeroRegisto,numeroRegisto) == 0)
+        {
+            posicao = i;
+            i = quantEncomendas;
+        }
+    }
+
+    return posicao;
+}
+
+
+///////////////////////////////////////////FUNÇOES GERAIS/////////////////////////////////////////////////////////
 //função para escrever a data
 void escreveData (tipoData data)
 {

@@ -45,7 +45,7 @@ int lerMatricula(char msg[TEXTO_LONGO], char str[TEXTO_LONGO])
     do
     {
         printf("%s", msg);
-        fgets(str, 8, stdin);
+        fgets(str, 9, stdin);
 
         tamTexto = strlen(str);
 
