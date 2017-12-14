@@ -46,6 +46,7 @@ void escreveData (tipoData data);
 void inserirVeiculo (tipoVeiculo vetorVeiculos[MAX_VEICULOS], int *quantVeiculos);
 int procuraVeiculo (tipoVeiculo vetorVeiculos[MAX_VEICULOS], int quantVeiculos, char matricula[8]);
 void listaVeiculos(tipoVeiculo vetorVeiculos[MAX_VEICULOS], int quantVeiculos);
+void consultaVeiculo(tipoVeiculo vetorVeiculos[MAX_VEICULOS],int *quantVeiculos);
 
 int main(void)
 {
@@ -71,6 +72,7 @@ int main(void)
                     inserirVeiculo(vetorVeiculos, &quantVeiculos);
                     break;
                 case 2: //consultar veiculo
+                    consultaVeiculo(vetorVeiculos, &quantVeiculos);
                     break;
                 case 3: //listar veiculos
                     listaVeiculos(vetorVeiculos, quantVeiculos);
@@ -141,6 +143,7 @@ void inserirVeiculo (tipoVeiculo vetorVeiculos[MAX_VEICULOS], int *quantVeiculos
     }
 }
 
+//função para listar veiculos
 void listaVeiculos(tipoVeiculo vetorVeiculos[MAX_VEICULOS], int quantVeiculos)
 {
     int i;
@@ -160,6 +163,7 @@ void listaVeiculos(tipoVeiculo vetorVeiculos[MAX_VEICULOS], int quantVeiculos)
     }
 }
 
+//função para escrever os dados do veiculo
 void escreveDadosVeiculo(tipoVeiculo veiculo, int cabecalho)
 {
     if (cabecalho == 0)
@@ -174,14 +178,52 @@ void escreveDadosVeiculo(tipoVeiculo veiculo, int cabecalho)
     switch (veiculo.estado)
     {
         case ESTADO_DISPONIVEL:
-            printf("\tDisponivel");
+            printf("\tDisponivel\n");
             break;
         case ESTADO_INDISPONIVEL:
-            printf("\tIndisponivel");
+            printf("\tIndisponivel\n");
             break;
     }
 }
 
+void consultaVeiculo(tipoVeiculo vetorVeiculos[MAX_VEICULOS], int *quantVeiculos)
+{
+    int posicao;
+    do
+    {
+        printf("\n\n----------- CONSULTAR VEICULO -----------  \n");
+        lerMatricula("\nMATRICULA: ", vetorVeiculos[*quantVeiculos].matricula);
+
+        posicao = procuraVeiculo(vetorVeiculos, *quantVeiculos, vetorVeiculos[*quantVeiculos].matricula);
+
+        if (posicao == NAO_EXISTE)  // Equipamento n�o existe no vetor
+        {
+            printf("\n\nATENCAO: O veiculo com essa matricula não existe: %s\n", vetorVeiculos[*quantVeiculos].matricula);
+        }
+        else
+        {
+            printf("\nMatricula.\t\tData \t\tCarga  \tEstado\t\n");
+            printf("__________________________________________________________\n");
+
+
+            printf("%s\t\t\t", vetorVeiculos[posicao].matricula);
+            escreveData(vetorVeiculos[posicao].dataFabrico);
+            printf("\t%d", vetorVeiculos[posicao].cargaMaxima);
+            switch (vetorVeiculos[posicao].estado)
+            {
+                case ESTADO_DISPONIVEL:
+                    printf("\tDisponivel");
+                    break;
+                case ESTADO_INDISPONIVEL:
+                    printf("\tIndisponivel");
+                    break;
+            }
+        }
+    }
+    while (posicao != NAO_EXISTE);
+}
+
+//função para procurar veiculos e retorna a posição no vetor
 int procuraVeiculo (tipoVeiculo vetorVeiculos[MAX_VEICULOS], int quantVeiculos, char matricula[8])
 {
     int posicao, i;
