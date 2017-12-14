@@ -1,0 +1,18 @@
+# depslib dependency file v1.0
+1513192611 source:/home/diogomachado/works/programacao-i/codeblocks_v2/codeblocks_v2/funcoesAuxiliares.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<ctype.h>
+	"funcoesAuxiliares.h"
+
+1513195200 /home/diogomachado/works/programacao-i/codeblocks_v2/codeblocks_v2/funcoesAuxiliares.h
+
+1513192607 source:/home/diogomachado/works/programacao-i/codeblocks_v2/codeblocks_v2/funcoesMenus.c
+	<stdio.h>
+	<ctype.h>
+	"funcoesMenus.h"
+	"funcoesAuxiliares.h"
+
+1513192609 /home/diogomachado/works/programacao-i/codeblocks_v2/codeblocks_v2/funcoesMenus.h
+
