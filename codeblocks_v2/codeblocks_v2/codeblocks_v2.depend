@@ -16,3 +16,27 @@
 
 1513192609 /home/diogomachado/works/programacao-i/codeblocks_v2/codeblocks_v2/funcoesMenus.h
 
+1513210588 source:c:\users\diogo machado\documents\github\programacao-i\codeblocks_v2\codeblocks_v2\funcoesauxiliares.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<ctype.h>
+	"funcoesAuxiliares.h"
+
+1513210588 c:\users\diogo machado\documents\github\programacao-i\codeblocks_v2\codeblocks_v2\funcoesauxiliares.h
+
+1513210588 source:c:\users\diogo machado\documents\github\programacao-i\codeblocks_v2\codeblocks_v2\funcoesmenus.c
+	<stdio.h>
+	<ctype.h>
+	"funcoesMenus.h"
+	"funcoesAuxiliares.h"
+
+1513210588 c:\users\diogo machado\documents\github\programacao-i\codeblocks_v2\codeblocks_v2\funcoesmenus.h
+
+1513210588 source:c:\users\diogo machado\documents\github\programacao-i\codeblocks_v2\codeblocks_v2\main.c
+	<stdio.h>
+	<stdlib.h>
+	<ctype.h>
+	"funcoesMenus.h"
+	"funcoesAuxiliares.h"
+

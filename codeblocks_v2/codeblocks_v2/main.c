@@ -3,7 +3,10 @@
 #include <ctype.h>
 
 #define NAO_EXISTE -1    // Valor devolvido pelas fun��es procurar(...) quando o laborat�rio, equipamento ou avaria n�o existem no respetivo vetor
-#define ESTADO_DISPONIVEL -1
+#define ESTADO_DISPONIVEL "Y"
+
+#define ANO_MIN 1900
+#define ANO_MAX 2500
 
 #include "funcoesMenus.h"
 #include "funcoesAuxiliares.h"
@@ -35,6 +38,12 @@ typedef struct
 } tipoEncomenda;
 
 
+
+//Declaração das funções
+tipoData lerData (void);
+void inserirVeiculo (tipoVeiculo vetorVeiculos[MAX_VEICULOS], int *quantVeiculos);
+
+
 int main(void)
 {
     tipoVeiculo vetorVeiculos[MAX_VEICULOS];
@@ -56,7 +65,7 @@ int main(void)
                 switch (subOpc)
                 {
                 case 1: // inserir veiculo
-                    inserirVeiculo(vetorVeiculos, quantVeiculos);
+                    inserirVeiculo(vetorVeiculos, &quantVeiculos);
                     break;
                 case 2: //consultar veiculo
                     break;
@@ -91,11 +100,12 @@ int main(void)
     while (opc != 'S');
 }
 
-void inserirVeiculo (tipoVeiculo vetorVeiculos[MAX_VEICULOS], int quantVeiculos)
+//Função que permite adicionar um veiculo se ele não existir
+void inserirVeiculo (tipoVeiculo vetorVeiculos[MAX_VEICULOS], int *quantVeiculos)
 {
     int posicao;
 
-    if (quantVeiculos == MAX_VEICULOS)
+    if (*quantVeiculos == MAX_VEICULOS)
     {
         printf("\n\nATENCAO: Impossivel inserir um novo Veiculo (MAXIMO atingido).\n");
     }
@@ -104,27 +114,26 @@ void inserirVeiculo (tipoVeiculo vetorVeiculos[MAX_VEICULOS], int quantVeiculos)
         do
         {
             printf("\n\n----------- INSERIR/INVENTARIAR VEICULOS -----------  \n");
-            
-            printf("%d",quantVeiculos);
+            lerMatricula("\nMATRICULA: ", vetorVeiculos[*quantVeiculos].matricula);
 
-            strcpy(vetorVeiculos[quantVeiculos].matricula, lerMatricula("\nMATRICULA: ", vetorVeiculos[quantVeiculos].matricula));
+            //strcpy(vetorVeiculos[*quantVeiculos].matricula, lerMatricula("\nMATRICULA: ", vetorVeiculos[*quantVeiculos].matricula));
 
-            posicao = procuraVeiculo(vetorVeiculos, quantVeiculos, vetorVeiculos[quantVeiculos].matricula);
+            posicao = procuraVeiculo(vetorVeiculos, *quantVeiculos, vetorVeiculos[*quantVeiculos].matricula);
 
             if (posicao == NAO_EXISTE)  // Equipamento n�o existe no vetor
             {
-                
-                strcpy(vetorVeiculos[quantVeiculos].matricula, lerMatricula("\nMATRICULA: ", vetorVeiculos[quantVeiculos].matricula));
+
+                lerMatricula("\nMATRICULA: ", vetorVeiculos[*quantVeiculos].matricula);
                 printf("\nData de Fabrico: ");
-                vetorVeiculos[quantVeiculos].dataFabrico = lerData();
-                vetorVeiculos[quantVeiculos].cargaMaxima = lerInteiro("\nCarga mazima: ", 0, 9999);
-                vetorVeiculos[quantVeiculos].estado = ESTADO_DISPONIVEL;
-                (quantVeiculos)++;
-                
+                vetorVeiculos[*quantVeiculos].dataFabrico = lerData();
+                vetorVeiculos[*quantVeiculos].cargaMaxima = lerInteiro("\nCarga mazima: ", 0, 9999);
+                strcpy(vetorVeiculos[*quantVeiculos].estado, ESTADO_DISPONIVEL);
+                (*quantVeiculos)++;
+
             }
             else
             {
-                printf("\n\nATENCAO: O veiculo com essa matricula ja existe: %s\n", vetorVeiculos[quantVeiculos].matricula);
+                printf("\n\nATENCAO: O veiculo com essa matricula ja existe: %s\n", vetorVeiculos[*quantVeiculos].matricula);
             }
         }
         while (posicao != NAO_EXISTE);
@@ -147,4 +156,47 @@ int procuraVeiculo (tipoVeiculo vetorVeiculos[MAX_VEICULOS], int quantVeiculos, 
     }
 
     return posicao;
+}
+
+
+tipoData lerData (void)
+{
+    tipoData data;
+    int diaMax;
+
+    data.ano = lerInteiro("\nAno: ", ANO_MIN, ANO_MAX);
+    data.mes = lerInteiro("Mes: ", 1, 12);
+
+    switch (data.mes)
+    {
+        case 1:
+        case 3:
+        case 5:
+        case 7:
+        case 8:
+        case 10:
+        case 12:
+            diaMax = 31;
+            break;
+        case 4:
+        case 6:
+        case 9:
+        case 11:
+            diaMax = 30;
+            break;
+        case 2:
+            if (data.ano % 400 == 0 || (data.ano % 4 == 0 && data.ano % 100 != 0))
+            {
+
+                diaMax = 29;
+            }
+            else
+            {
+                diaMax = 28;
+            }
+    }
+
+    data.dia = lerInteiro("Dia: ", 1, diaMax);
+
+    return data;
 }
