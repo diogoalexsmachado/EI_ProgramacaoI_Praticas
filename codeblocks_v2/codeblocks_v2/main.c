@@ -37,7 +37,7 @@ typedef struct
     int numeroRegisto; // valor �nico
     tipoData dataRegisto;
     int pesoEncomenda;
-    char estado[TEXTO_BREVE];
+    int estado;
     tipoData dataEntregaOuDevolucao;
     char observacoesEncomenda[TEXTO_LONGO];
 } tipoEncomenda;
@@ -50,6 +50,10 @@ void inserirVeiculo (tipoVeiculo vetorVeiculos[MAX_VEICULOS], int *quantVeiculos
 int procuraVeiculo (tipoVeiculo vetorVeiculos[MAX_VEICULOS], int quantVeiculos, char matricula[8]);
 void listaVeiculos(tipoVeiculo vetorVeiculos[MAX_VEICULOS], int quantVeiculos);
 void consultaVeiculo(tipoVeiculo vetorVeiculos[MAX_VEICULOS],int *quantVeiculos);
+
+void listaEncomendas(tipoEncomenda vetorEncomendas[MAX_ENCOMENDAS], int quantEncomendas);
+void escreveDadosEncomenda(tipoEncomenda encomenda, int cabecalho);
+int procuraEncomenda(tipoEncomenda vetorEncomendas[MAX_ENCOMENDAS], int quantEncomendas, int numReferencia);
 
 int main(void)
 {
@@ -96,6 +100,7 @@ int main(void)
                 case 2: //consultar encomenda
                     break;
                 case 3: //listar encomendas
+                    listaEncomendas(vetorEncomendas, quantEncomendas);
                     break;
                 case 4: //eliminar encomenda
                     break;
@@ -155,7 +160,7 @@ void listaVeiculos(tipoVeiculo vetorVeiculos[MAX_VEICULOS], int quantVeiculos)
 
     if (quantVeiculos == 0)
     {
-        printf("\n\nATENCAO: nao existem equipamentos inseridos.\n");
+        printf("\n\nATENCAO: nao existem veiculos inseridos.\n");
     }
     else
     {
@@ -247,7 +252,7 @@ int procuraVeiculo (tipoVeiculo vetorVeiculos[MAX_VEICULOS], int quantVeiculos, 
     return posicao;
 }
 
-///////////////////////////////////////////FUNÇOES VEICULOS/////////////////////////////////////////////////////////
+///////////////////////////////////////////FUNÇOES ENCOMENDAS/////////////////////////////////////////////////////////
 //Função que permite adicionar uma encomenda se ela não existir
 void inserirEncomenda (tipoEncomenda vetorEncomendas[MAX_ENCOMENDAS], int *quantEncomendas)
 {
@@ -262,31 +267,91 @@ void inserirEncomenda (tipoEncomenda vetorEncomendas[MAX_ENCOMENDAS], int *quant
         do
         {
             printf("\n\n----------- INSERIR/INVENTARIAR VEICULOS -----------  \n");
-            vetorEncomendas[*quantEncomendas].numeroRegisto = lerInteiro("\nID ENCOMENDA: ", 1,16);
+            vetorEncomendas[*quantEncomendas].numeroRegisto = lerInteiro("\nNUM REGISTO: ", 1,999999);
 
-            posicao = procuraVeiculo(vetorEncomendas, *quantEncomendas, vetorEncomendas[*quantEncomendas].numeroRegisto);
-/*
-            if (posicao == NAO_EXISTE)  // Equipamento n�o existe no vetor
+            posicao = procuraEncomenda(vetorEncomendas, *quantEncomendas, vetorEncomendas[*quantEncomendas].numeroRegisto);
+
+            if (posicao == NAO_EXISTE)  // encomenda n�o existe no vetor
             {
+                printf("\nData de Registo: ");
+                vetorEncomendas[*quantEncomendas].dataRegisto = lerData();
+                vetorEncomendas[*quantEncomendas].pesoEncomenda = lerInteiro("\nPeso Encomenda: ", 0, 9999);
+                printf("\nData de Entrega: ");
+                vetorEncomendas[*quantEncomendas].dataEntregaOuDevolucao = lerData();
 
-                printf("\nData de Fabrico: ");
-                vetorEncomendas[*quantEncomendas].dataFabrico = lerData();
-                vetorEncomendas[*quantEncomendas].cargaMaxima = lerInteiro("\nCarga maxima: ", 0, 9999);
-                vetorEncomendas[*quantEncomendas].estado = ESTADO_DISPONIVEL;
+                    //TODO IF MESMO DIA OU DEPOIS
+
+                lerString("Observacoes: ", vetorEncomendas[*quantEncomendas].observacoesEncomenda, TEXTO_LONGO);
                 (*quantEncomendas)++;
 
             }
             else
             {
-                printf("\n\nATENCAO: O veiculo com essa matricula ja existe: %s\n", vetorEncomendas[*quantEncomendas].matricula);
-            }*/
+                printf("\n\nATENCAO: A encomenda com esse num registo ja existe: %d\n", vetorEncomendas[*quantEncomendas].numeroRegisto);
+            }
         }
         while (posicao != NAO_EXISTE);
     }
 }
 
-//função para procurar veiculos e retorna a posição no vetor
-int procuraEncomenda(tipoEncomenda vetorEncomendas[MAX_ENCOMENDAS], int quantEncomendas, char numeroRegisto)
+//função para listar encomendas
+void listaEncomendas(tipoEncomenda vetorEncomendas[MAX_ENCOMENDAS], int quantEncomendas)
+{
+    int i;
+
+    if (quantEncomendas == 0)
+    {
+        printf("\n\nATENCAO: nao existem encomendas inseridos.\n");
+    }
+    else
+    {
+        printf("\n\n-------------------------------------------- LISTAGEM DE ENCOMENDAS -------------------------------------------------- \n\n");
+
+        for (i=0; i < quantEncomendas; i++)
+        {
+            escreveDadosEncomenda(vetorEncomendas[i], i);
+        }
+    }
+}
+
+//função para escrever os dados do encomenda
+void escreveDadosEncomenda(tipoEncomenda encomenda, int cabecalho)
+{
+    if (cabecalho == 0)
+    {
+        printf("\tNUM.\t\tData Reg. \t\tPeso \t\tEstado\t\tData Entr.\t\tObs\t\n");
+        printf("\t___________________________________________________________________________________________________\n");
+    }
+
+
+    //TODO if observacoes mostrar asterisco
+
+    printf("\t%d\t\t", encomenda.numeroRegisto);
+    escreveData(encomenda.dataRegisto);
+    printf("\t\t%d", encomenda.pesoEncomenda);
+
+    switch (encomenda.estado)
+    {
+        case ESTADO_DISPONIVEL:
+            printf("\t\tDisponivel\t");
+            break;
+        case ESTADO_INDISPONIVEL:
+            printf("\t\tIndisponivel\t");
+            break;
+    }
+
+    escreveData(encomenda.dataEntregaOuDevolucao);
+
+    if(strcmp(encomenda.observacoesEncomenda,"N"))
+    {
+        printf("\t\t*\n");
+    }
+
+
+}
+
+//função para procurar encomenda e retorna a posição no vetor
+int procuraEncomenda(tipoEncomenda vetorEncomendas[MAX_ENCOMENDAS], int quantEncomendas, int numeroRegisto)
 {
     int posicao, i;
 
@@ -294,7 +359,7 @@ int procuraEncomenda(tipoEncomenda vetorEncomendas[MAX_ENCOMENDAS], int quantEnc
 
     for (i=0; i < quantEncomendas; i++)
     {
-        if (strcmp(vetorEncomendas[i].numeroRegisto,numeroRegisto) == 0)
+        if (vetorEncomendas[i].numeroRegisto == numeroRegisto)
         {
             posicao = i;
             i = quantEncomendas;
