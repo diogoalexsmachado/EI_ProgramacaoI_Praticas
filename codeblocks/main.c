@@ -39,6 +39,7 @@ typedef struct
     int pesoEncomenda;
     int estado;
     tipoData dataEntregaOuDevolucao;
+    //TODO destino
     char observacoesEncomenda[TEXTO_LONGO];
 } tipoEncomenda;
 
@@ -55,6 +56,9 @@ void listaEncomendas(tipoEncomenda vetorEncomendas[MAX_ENCOMENDAS], int quantEnc
 void escreveDadosEncomenda(tipoEncomenda encomenda, int cabecalho);
 int procuraEncomenda(tipoEncomenda vetorEncomendas[MAX_ENCOMENDAS], int quantEncomendas, int numReferencia);
 void consultarEncomenda(tipoEncomenda vetorEncomendas[MAX_ENCOMENDAS], int *quantEncomendas);
+
+void guardarFicheiro (tipoVeiculo vetorVeiculos[MAX_VEICULOS], int quantVeiculos, tipoEncomenda vetorEncomenda[MAX_ENCOMENDAS], int quantEncomendas);
+void lerFicheiro (tipoVeiculo vetorVeiculos[MAX_VEICULOS], int *quantVeiculos, tipoEncomenda vetorEncomendas[MAX_ENCOMENDAS], int *quantEncomendas);
 
 int main(void)
 {
@@ -111,6 +115,12 @@ int main(void)
             }
             while (subOpc != 0);
             break;
+                case 'F': //guardar ficheiro
+                    guardarFicheiro(vetorVeiculos, quantVeiculos, vetorEncomendas, quantEncomendas);
+                    break;
+                case 'R': //ler ficheiro
+                    lerFicheiro (vetorVeiculos, &quantVeiculos, vetorEncomendas, &quantEncomendas);
+                    break;
         }
     }
     while (opc != 'S');
@@ -409,3 +419,106 @@ tipoData lerData (void)
     data.dia = lerInteiro("Dia: ", 1, diaMax);
     return data;
 }
+
+
+// -------------- FUN��ES LER e ESCREVER FICHEIRO ----------------
+
+// Funcao guardar no ficheiro
+void guardarFicheiro (tipoVeiculo vetorVeiculos[MAX_VEICULOS], int quantVeiculos, tipoEncomenda vetorEncomendas[MAX_ENCOMENDAS], int quantEncomendas)
+{
+    FILE *ficheiro;
+    int elementosGuardados;
+
+    ficheiro = fopen("dadosGuardados.dat", "wb");
+
+    if (ficheiro == NULL)
+    {
+        printf("\nERRO: falha na abertura do ficheiro.\n");
+    }
+    else
+    {
+        elementosGuardados = fwrite(&quantVeiculos, sizeof(int), 1, ficheiro);
+        if (elementosGuardados != 1)
+        {
+            printf("\nERRO: falha na gravacao do numero de veiculos inseridos.\n");
+        }
+        else
+        {
+            elementosGuardados = fwrite(vetorVeiculos, sizeof (tipoVeiculo), quantVeiculos, ficheiro);
+            if (elementosGuardados != quantVeiculos)
+            {
+                printf("\nERRO: falha na gravacao dos dados dos veiculos inseridos.\n");
+            }
+            else
+            {
+                elementosGuardados = fwrite(&quantEncomendas, sizeof(int), 1, ficheiro);
+                if (elementosGuardados != 1)
+                {
+                    printf("\nERRO: falha na gravacao do numero de encomendas inseridos.\n");
+                }
+                else
+                {
+                    elementosGuardados = fwrite(vetorEncomendas, sizeof(tipoEncomenda), quantEncomendas, ficheiro);
+                    if (elementosGuardados != quantEncomendas)
+                    {
+                         printf("\nERRO: falha na gravacao dos dados das encomendas inseridos.\n");
+                    }
+                }
+            }
+        }
+        fclose(ficheiro);
+    }
+}
+
+// Funcao ler do ficheiro
+void lerFicheiro (tipoVeiculo vetorVeiculos[MAX_VEICULOS], int *quantVeiculos, tipoEncomenda vetorEncomendas[MAX_ENCOMENDAS], int *quantEncomendas)
+{
+    FILE *ficheiro;
+    int elementosGuardados;
+
+    *quantVeiculos = 0;
+    *quantEncomendas = 0;
+
+    ficheiro = fopen("dadosGuardados.dat", "rb");
+
+    if (ficheiro == NULL)
+    {
+        printf("\nERRO: falha na abertura do ficheiro.\n");
+    }
+    else
+    {
+        elementosGuardados = fread(quantVeiculos, sizeof(int), 1, ficheiro);
+        if (elementosGuardados != 1)
+        {
+            printf("\nERRO: falha na leitura do numero de veiculos inseridos.\n");
+        }
+        else
+        {
+            elementosGuardados = fread(vetorVeiculos, sizeof (tipoVeiculo), *quantVeiculos, ficheiro);
+            if (elementosGuardados != *quantVeiculos)
+            {
+                printf("\nERRO: falha na leitura dos dados dos veiculos inseridos.\n");
+                *quantVeiculos = 0;
+            }
+            else
+            {
+                elementosGuardados = fread(vetorEncomendas, sizeof(int), 1, ficheiro);
+                if (elementosGuardados != 1)
+                {
+                    printf("\nERRO: falha na leitura do numero de encomendas inseridas.\n");
+                }
+                else
+                {
+                    elementosGuardados = fread(vetorEncomendas, sizeof(tipoEncomenda), *quantEncomendas, ficheiro);
+                    if (elementosGuardados != *quantEncomendas)
+                    {
+                         printf("\nERRO: falha na leitura dos dados das encomendas inseridas.\n");
+                         *quantEncomendas = 0;
+                    }
+                }
+            }
+        }
+        fclose(ficheiro);
+    }
+}
+

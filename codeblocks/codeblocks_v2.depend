@@ -41,3 +41,28 @@
 	"funcoesMenus.h"
 	"funcoesAuxiliares.h"
 
+1513372492 source:c:\users\zé carlos\documents\github\programacao-i\codeblocks\funcoesauxiliares.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<ctype.h>
+	"funcoesAuxiliares.h"
+
+1513372492 c:\users\zé carlos\documents\github\programacao-i\codeblocks\funcoesauxiliares.h
+
+1513372492 source:c:\users\zé carlos\documents\github\programacao-i\codeblocks\funcoesmenus.c
+	<stdio.h>
+	<ctype.h>
+	"funcoesMenus.h"
+	"funcoesAuxiliares.h"
+
+1513372492 c:\users\zé carlos\documents\github\programacao-i\codeblocks\funcoesmenus.h
+
+1513376447 source:c:\users\zé carlos\documents\github\programacao-i\codeblocks\main.c
+	<stdio.h>
+	<stdlib.h>
+	<ctype.h>
+	<string.h>
+	"funcoesMenus.h"
+	"funcoesAuxiliares.h"
+

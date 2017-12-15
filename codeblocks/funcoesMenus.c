@@ -15,6 +15,7 @@ char menu ()
     printf("\n\n------------ MENU PRINCIPAL ---------------------------------------------\n");
     printf("\n\tV - Gerir Veiculos\n");
     printf("\tE - Gerir Encomendas\n");
+    printf("\tC - Carregamentos/Descarregamentos\n");
 
     printf("\n\tF - Guardar no Ficheiro\n");
     printf("\tR - Ler do Ficheiro\n");
@@ -26,12 +27,12 @@ char menu ()
         scanf(" %c", &opc);
         opc = toupper(opc);
 
-        if (opc != 'V' && opc != 'E' && opc != 'S' && opc != 'F' && opc != 'R')
+        if (opc != 'V' && opc != 'E' && opc != 'S' && opc != 'F' && opc != 'R' && opc != 'C')
         {
             printf("\nERRO: opcao desconhecida. Tente novamente.\n");
         }
     }
-    while (opc != 'V' && opc != 'E' && opc != 'S' && opc != 'F' && opc != 'R');
+    while (opc != 'V' && opc != 'E' && opc != 'S' && opc != 'F' && opc != 'R' && opc != 'C');
 
     return opc;
 }
@@ -76,8 +77,8 @@ char menuRegistos ()
     char opc;
 
     printf("\n\n\n\n-------------------------------------------------------------------------\n");
-    printf("\n\n------------ MENU REGISTOS ---------------------------------------------\n");
-    printf("\n\tC - Carregamento de Encomendas\n");
+    printf("\n\n------------ MENU REGISTOS ---------------------------------------------\n\n");
+    printf("\tC - Carregamento de Encomendas\n");
     printf("\tI - Inicio de Viagem\n");
     printf("\tR - Regresso de Viagem\n");
     printf("\tD - Descarregamento de Encomendas\n");
