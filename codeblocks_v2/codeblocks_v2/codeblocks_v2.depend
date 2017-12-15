@@ -16,14 +16,14 @@
 
 1513192609 /home/diogomachado/works/programacao-i/codeblocks_v2/codeblocks_v2/funcoesMenus.h
 
-1513269065 source:c:\users\diogo machado\documents\github\programacao-i\codeblocks_v2\codeblocks_v2\funcoesauxiliares.c
+1513306629 source:c:\users\diogo machado\documents\github\programacao-i\codeblocks_v2\codeblocks_v2\funcoesauxiliares.c
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
 	<ctype.h>
 	"funcoesAuxiliares.h"
 
-1513210588 c:\users\diogo machado\documents\github\programacao-i\codeblocks_v2\codeblocks_v2\funcoesauxiliares.h
+1513308335 c:\users\diogo machado\documents\github\programacao-i\codeblocks_v2\codeblocks_v2\funcoesauxiliares.h
 
 1513210588 source:c:\users\diogo machado\documents\github\programacao-i\codeblocks_v2\codeblocks_v2\funcoesmenus.c
 	<stdio.h>
@@ -33,7 +33,7 @@
 
 1513210588 c:\users\diogo machado\documents\github\programacao-i\codeblocks_v2\codeblocks_v2\funcoesmenus.h
 
-1513274031 source:c:\users\diogo machado\documents\github\programacao-i\codeblocks_v2\codeblocks_v2\main.c
+1513305987 source:c:\users\diogo machado\documents\github\programacao-i\codeblocks_v2\codeblocks_v2\main.c
 	<stdio.h>
 	<stdlib.h>
 	<ctype.h>

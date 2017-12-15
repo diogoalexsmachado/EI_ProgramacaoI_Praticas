@@ -38,20 +38,27 @@ void lerString(char msg[TEXTO_LONGO], char str[TEXTO_LONGO], int tamanho)
     while (tamTexto <= 1);
 }
 
-int lerMatricula(char msg[TEXTO_LONGO], char str[TEXTO_LONGO])
+int lerMatricula(char msg[TEXTO_LONGO], char str[TEXTO_LONGO], int isSearch)
 {
     int tamTexto;
 
     do
     {
         printf("%s", msg);
-        fgets(str, 9, stdin);
+        fgets(str, 10, stdin);
+
 
         tamTexto = strlen(str);
 
-        if (tamTexto <= 1)
+        if (tamTexto != 9)
         {
-            printf("\n\nERRO: tem de inserir um valor.\n");
+            printf("\n\nERRO: Matricula tem 8 caracteres.\n");
+
+            if(isSearch==1){
+                if(strcmp(str,"0")){
+                    tamTexto=9;
+                }
+            }
         }
         else
         {
@@ -65,7 +72,9 @@ int lerMatricula(char msg[TEXTO_LONGO], char str[TEXTO_LONGO])
             }
         }
     }
-    while (tamTexto <= 1);
+    while (tamTexto != 9);
+
+
 }
 
 int lerInteiro (char msg[TEXTO_LONGO], int limMin, int limMax)

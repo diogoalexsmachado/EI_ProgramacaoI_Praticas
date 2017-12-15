@@ -49,11 +49,12 @@ void escreveData (tipoData data);
 void inserirVeiculo (tipoVeiculo vetorVeiculos[MAX_VEICULOS], int *quantVeiculos);
 int procuraVeiculo (tipoVeiculo vetorVeiculos[MAX_VEICULOS], int quantVeiculos, char matricula[8]);
 void listaVeiculos(tipoVeiculo vetorVeiculos[MAX_VEICULOS], int quantVeiculos);
-void consultaVeiculo(tipoVeiculo vetorVeiculos[MAX_VEICULOS],int *quantVeiculos);
+void consultarVeiculo(tipoVeiculo vetorVeiculos[MAX_VEICULOS],int *quantVeiculos);
 
 void listaEncomendas(tipoEncomenda vetorEncomendas[MAX_ENCOMENDAS], int quantEncomendas);
 void escreveDadosEncomenda(tipoEncomenda encomenda, int cabecalho);
 int procuraEncomenda(tipoEncomenda vetorEncomendas[MAX_ENCOMENDAS], int quantEncomendas, int numReferencia);
+void consultarEncomenda(tipoEncomenda vetorEncomendas[MAX_ENCOMENDAS], int *quantEncomendas);
 
 int main(void)
 {
@@ -65,7 +66,6 @@ int main(void)
 
     do
     {
-
         opc = menu();
         switch (opc)
         {
@@ -79,7 +79,7 @@ int main(void)
                     inserirVeiculo(vetorVeiculos, &quantVeiculos);
                     break;
                 case 2: //consultar veiculo
-                    consultaVeiculo(vetorVeiculos, &quantVeiculos);
+                    consultarVeiculo(vetorVeiculos, &quantVeiculos);
                     break;
                 case 3: //listar veiculos
                     listaVeiculos(vetorVeiculos, quantVeiculos);
@@ -98,6 +98,7 @@ int main(void)
                     inserirEncomenda(vetorEncomendas, &quantEncomendas);
                     break;
                 case 2: //consultar encomenda
+                    consultarEncomenda(vetorEncomendas, &quantEncomendas);
                     break;
                 case 3: //listar encomendas
                     listaEncomendas(vetorEncomendas, quantEncomendas);
@@ -130,7 +131,7 @@ void inserirVeiculo (tipoVeiculo vetorVeiculos[MAX_VEICULOS], int *quantVeiculos
         do
         {
             printf("\n\n----------- INSERIR/INVENTARIAR VEICULOS -----------  \n");
-            lerMatricula("\nMATRICULA: ", vetorVeiculos[*quantVeiculos].matricula);
+            lerMatricula("\nMATRICULA: ", vetorVeiculos[*quantVeiculos].matricula, 0);
 
             posicao = procuraVeiculo(vetorVeiculos, *quantVeiculos, vetorVeiculos[*quantVeiculos].matricula);
 
@@ -178,11 +179,11 @@ void escreveDadosVeiculo(tipoVeiculo veiculo, int cabecalho)
 {
     if (cabecalho == 0)
     {
-        printf("\nMatricula.\t\tData \t\tCarga  \tEstado\t\n");
-        printf("__________________________________________________________\n");
+        printf("\n\tMatricula.\t\tData \t\tCarga  \t\tEstado\t\n");
+        printf("\t________________________________________________________________\n");
     }
 
-    printf("%8s\t\t\t", veiculo.matricula);
+    printf("\t%8s\t\t", veiculo.matricula);
     escreveData(veiculo.dataFabrico);
     printf("\t%d", veiculo.cargaMaxima);
     switch (veiculo.estado)
@@ -196,13 +197,14 @@ void escreveDadosVeiculo(tipoVeiculo veiculo, int cabecalho)
     }
 }
 
-void consultaVeiculo(tipoVeiculo vetorVeiculos[MAX_VEICULOS], int *quantVeiculos)
+//função para consultar veículo
+void consultarVeiculo(tipoVeiculo vetorVeiculos[MAX_VEICULOS], int *quantVeiculos)
 {
     int posicao;
     do
     {
         printf("\n\n----------- CONSULTAR VEICULO -----------  \n");
-        lerMatricula("\nMATRICULA: ", vetorVeiculos[*quantVeiculos].matricula);
+        lerMatricula("\nMATRICULA: ", vetorVeiculos[*quantVeiculos].matricula, 1);
 
         posicao = procuraVeiculo(vetorVeiculos, *quantVeiculos, vetorVeiculos[*quantVeiculos].matricula);
 
@@ -212,22 +214,7 @@ void consultaVeiculo(tipoVeiculo vetorVeiculos[MAX_VEICULOS], int *quantVeiculos
         }
         else
         {
-            printf("\nMatricula.\t\tData \t\tCarga  \tEstado\t\n");
-            printf("__________________________________________________________\n");
-
-
-            printf("%s\t\t\t", vetorVeiculos[posicao].matricula);
-            escreveData(vetorVeiculos[posicao].dataFabrico);
-            printf("\t%d", vetorVeiculos[posicao].cargaMaxima);
-            switch (vetorVeiculos[posicao].estado)
-            {
-                case ESTADO_DISPONIVEL:
-                    printf("\tDisponivel");
-                    break;
-                case ESTADO_INDISPONIVEL:
-                    printf("\tIndisponivel");
-                    break;
-            }
+            escreveDadosVeiculo(vetorVeiculos[posicao], 0);
         }
     }
     while (posicao != NAO_EXISTE);
@@ -267,7 +254,7 @@ void inserirEncomenda (tipoEncomenda vetorEncomendas[MAX_ENCOMENDAS], int *quant
         do
         {
             printf("\n\n----------- INSERIR/INVENTARIAR VEICULOS -----------  \n");
-            vetorEncomendas[*quantEncomendas].numeroRegisto = lerInteiro("\nNUM REGISTO: ", 1,999999);
+            vetorEncomendas[*quantEncomendas].numeroRegisto = lerInteiro("\nNUM REGISTO: ", 1,MAX_ENCOMENDAS);
 
             posicao = procuraEncomenda(vetorEncomendas, *quantEncomendas, vetorEncomendas[*quantEncomendas].numeroRegisto);
 
@@ -367,6 +354,29 @@ int procuraEncomenda(tipoEncomenda vetorEncomendas[MAX_ENCOMENDAS], int quantEnc
     }
 
     return posicao;
+}
+
+//função para consultar encomenda
+void consultarEncomenda(tipoEncomenda vetorEncomendas[MAX_ENCOMENDAS], int *quantEncomendas)
+{
+    int posicao;
+    do
+    {
+        printf("\n\n----------- CONSULTAR VEICULO -----------  \n");
+        vetorEncomendas[*quantEncomendas].numeroRegisto = lerInteiro("\nNUM REGISTO: ", 1, MAX_ENCOMENDAS);
+
+        posicao = procuraEncomenda(vetorEncomendas, *quantEncomendas, vetorEncomendas[*quantEncomendas].numeroRegisto);
+
+        if (posicao == NAO_EXISTE)  // Encomenda n�o existe no vetor
+        {
+            printf("\n\nATENCAO: A encomenda com esse num de registo não existe: %d\n", vetorEncomendas[*quantEncomendas].numeroRegisto);
+        }
+        else
+        {
+            escreveDadosEncomenda(vetorEncomendas[posicao], 0);
+        }
+    }
+    while (posicao != NAO_EXISTE);
 }
 
 
