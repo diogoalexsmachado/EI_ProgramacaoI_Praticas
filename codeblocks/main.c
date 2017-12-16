@@ -61,6 +61,7 @@ void escreveDadosEncomenda(tipoEncomenda encomenda, int cabecalho);
 int procuraEncomenda(tipoEncomenda vetorEncomendas[MAX_ENCOMENDAS], int quantEncomendas, int numReferencia);
 void consultarEncomenda(tipoEncomenda vetorEncomendas[MAX_ENCOMENDAS], int *quantEncomendas);
 void eliminarEncomenda(tipoEncomenda vetorEncomendas[MAX_ENCOMENDAS], int *quantEncomendas);
+void alterarDestinoEncomenda(tipoEncomenda vetorEncomendas[MAX_ENCOMENDAS], int *quantEncomendas);
 
 void guardarFicheiro (tipoVeiculo vetorVeiculos[MAX_VEICULOS], int quantVeiculos, tipoEncomenda vetorEncomenda[MAX_ENCOMENDAS], int quantEncomendas);
 void lerFicheiro (tipoVeiculo vetorVeiculos[MAX_VEICULOS], int *quantVeiculos, tipoEncomenda vetorEncomendas[MAX_ENCOMENDAS], int *quantEncomendas);
@@ -116,6 +117,7 @@ int main(void)
 					eliminarEncomenda(vetorEncomendas, &quantEncomendas);
 					break;
 				case 5: //alterar destino encomenda
+					alterarDestinoEncomenda(vetorEncomendas, &quantEncomendas);
 					break;
 				}
 			}
@@ -357,14 +359,7 @@ void escreveDadosEncomenda(tipoEncomenda encomenda, int cabecalho)
 	}
 	escreveData(encomenda.dataEntregaOuDevolucao);
 	printf("\t%s", encomenda.destino);
-	if(!strcmp(encomenda.observacoesEncomenda,"N"))
-	{
-		printf("\t*\n");
-	}
-	else 
-	{
-		printf("\t\n");
-	}
+	printf("\t\t%s\n\n", encomenda.observacoesEncomenda);
 }
 
 //função para procurar encomenda e retorna a posição no vetor
@@ -418,7 +413,6 @@ void eliminarEncomenda(tipoEncomenda vetorEncomendas[MAX_ENCOMENDAS], int *quant
 	posicao = procuraEncomenda(vetorEncomendas, *quantEncomendas, vetorEncomendas[*quantEncomendas].numeroRegisto);
 
 	
-	printf("posição do vetor: %d\n", posicao);
 	if (posicao == NAO_EXISTE)  // Encomenda nao existe no vetor
 	{
 		printf("\n\nATENCAO: A encomenda com esse num de registo não existe: %d\n", vetorEncomendas[*quantEncomendas].numeroRegisto);
@@ -427,13 +421,36 @@ void eliminarEncomenda(tipoEncomenda vetorEncomendas[MAX_ENCOMENDAS], int *quant
 	{
 		for (i=posicao; i < *quantEncomendas-1; i++) 
 		{
-		printf("vetor a ser editado: %d\n", i);
 		vetorEncomendas[i] = vetorEncomendas[i+1];
 		}
 
 		(*quantEncomendas)--; /* Atualiza nº de encomendas */
 	}
 }
+
+//função para eliminar encomenda
+void alterarDestinoEncomenda(tipoEncomenda vetorEncomendas[MAX_ENCOMENDAS], int *quantEncomendas)
+{
+	int posicao, i;
+
+	printf("\n\n----------- EDITAR DESTINO ENCOMENDA -----------  \n");
+
+	vetorEncomendas[*quantEncomendas].numeroRegisto = lerInteiro("\nNUM REGISTO: ", 1, MAX_ENCOMENDAS);
+
+	posicao = procuraEncomenda(vetorEncomendas, *quantEncomendas, vetorEncomendas[*quantEncomendas].numeroRegisto);
+
+	if (posicao == NAO_EXISTE)  // Encomenda nao existe no vetor
+	{
+		printf("\n\nATENCAO: A encomenda com esse num de registo não existe: %d\n", vetorEncomendas[*quantEncomendas].numeroRegisto);
+	}
+	else
+	{
+		printf("DESTINO ANTIGO: %s \n", vetorEncomendas[posicao].destino);
+		lerString("NOVO DESTINO:", vetorEncomendas[posicao].destino, TEXTO_LONGO);
+	}
+}
+
+
 
 ///////////////////////////////////////////FUNÇOES GERAIS/////////////////////////////////////////////////////////
 //função para escrever a data
