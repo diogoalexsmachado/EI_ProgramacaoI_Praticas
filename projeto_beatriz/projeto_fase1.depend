@@ -1,0 +1,7 @@
+# depslib dependency file v1.0
+1484506227 source:c:\users\beatriz\desktop\exercicios mini teste\projeto_fase1\projeto.c
+	<stdio.h>
+	<ctype.h>
+	<stdlib.h>
+	<string.h>
+
