@@ -64,6 +64,8 @@ void consultarEncomenda(tipoEncomenda vetorEncomendas[MAX_ENCOMENDAS], int *quan
 void eliminarEncomenda(tipoEncomenda vetorEncomendas[MAX_ENCOMENDAS], int *quantEncomendas);
 void alterarDestinoEncomenda(tipoEncomenda vetorEncomendas[MAX_ENCOMENDAS], int *quantEncomendas);
 
+void pesoMedioEncomendas(tipoEncomenda vetorEncomendas[MAX_ENCOMENDAS], int quantEncomendas);
+
 void guardarFicheiro (tipoVeiculo vetorVeiculos[MAX_VEICULOS], int quantVeiculos, tipoEncomenda vetorEncomenda[MAX_ENCOMENDAS], int quantEncomendas);
 void lerFicheiro (tipoVeiculo vetorVeiculos[MAX_VEICULOS], int *quantVeiculos, tipoEncomenda vetorEncomendas[MAX_ENCOMENDAS], int *quantEncomendas);
 
@@ -156,8 +158,7 @@ int main(void)
 				switch (subOpc)
 				{
 				case 1: // peso medio das encomendas
-					
-
+					pesoMedioEncomendas(vetorEncomendas, quantEncomendas);
 					break;
 				case 2: // qtd de encomendas por veiculo
 
@@ -548,6 +549,20 @@ tipoData lerData (void)
 
 // -------------- FUNCOES ESTATISTICAS ----------------
 
+//função que permite calcular peso medio das encomendas
+void pesoMedioEncomendas(tipoEncomenda vetorEncomendas[MAX_ENCOMENDAS], int quantEncomendas)
+{
+	int i, count = 0;
+	float pesoMediaEncomendas=0.0;
+	for (i=0; i < quantEncomendas; i++)
+	{
+			count += vetorEncomendas[i].pesoEncomenda;
+	}
+
+	pesoMediaEncomendas = (float) count/quantEncomendas;
+	limpaEcra();
+	printf("Peso Médio das encomendas: %.2f kg",pesoMediaEncomendas);
+}
 
 
 

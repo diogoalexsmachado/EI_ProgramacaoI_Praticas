@@ -147,3 +147,7 @@ void limparBuffer (void)
     }
     while (lixo != '\n' && lixo != EOF);
 }
+
+void limpaEcra(){
+    printf("\n\n\n\n\n\n\n\n\n\n\n");
+}
