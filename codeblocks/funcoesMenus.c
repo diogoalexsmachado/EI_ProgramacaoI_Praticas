@@ -86,6 +86,6 @@ char menuEstatisticas ()
     printf("\t4 - Matrícula do(s) veículo(s) com menos viagens efetuadas\n");
     printf("\t5 - Destino(s) com maior quantidade de encomendas entregues\n\n");
     printf("\n\t0 - VOLTAR ATRAS\n");
-    opc = lerInteiro("\n\t\tOPCAO --> ", 0, 4);
+    opc = lerInteiro("\n\t\tOPCAO --> ", 0, 5);
     return opc;
 }

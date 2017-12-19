@@ -29,7 +29,7 @@ typedef struct
 	char matricula[TEXTO_BREVE]; // valor �nico
 	tipoData dataFabrico;
 	int cargaMaxima;
-	int estado;
+	int estado; //0- parado || 1 - em viagem || 2 - de regresso
 } tipoVeiculo;
 
 //tipoEncomenda
@@ -42,6 +42,7 @@ typedef struct
 	tipoData dataEntregaOuDevolucao;
 	char destino[TEXTO_LONGO];
 	char observacoesEncomenda[TEXTO_LONGO];
+	int numeroMatricula;
 } tipoEncomenda;
 
 //Declaração das funções
@@ -55,6 +56,8 @@ int procuraVeiculo (tipoVeiculo vetorVeiculos[MAX_VEICULOS], int quantVeiculos, 
 void escreveDadosVeiculo(tipoVeiculo veiculo, int cabecalho);
 void listaVeiculos(tipoVeiculo vetorVeiculos[MAX_VEICULOS], int quantVeiculos);
 void consultarVeiculo(tipoVeiculo vetorVeiculos[MAX_VEICULOS],int *quantVeiculos);
+void declararInicioDeViagem(tipoVeiculo vetorVeiculos[MAX_VEICULOS],int quantVeiculos);
+void declararRegressoDeViagem(tipoVeiculo vetorVeiculos[MAX_VEICULOS],int quantVeiculos);
 
 void inserirEncomenda (tipoEncomenda vetorEncomendas[MAX_ENCOMENDAS], int *quantEncomendas);
 void listaEncomendas(tipoEncomenda vetorEncomendas[MAX_ENCOMENDAS], int quantEncomendas);
@@ -65,6 +68,8 @@ void eliminarEncomenda(tipoEncomenda vetorEncomendas[MAX_ENCOMENDAS], int *quant
 void alterarDestinoEncomenda(tipoEncomenda vetorEncomendas[MAX_ENCOMENDAS], int *quantEncomendas);
 
 void pesoMedioEncomendas(tipoEncomenda vetorEncomendas[MAX_ENCOMENDAS], int quantEncomendas);
+void destinosComMaisEncomendas(tipoEncomenda vetorEncomendas[MAX_ENCOMENDAS], int quantEncomendas);
+void encomendaPorData (tipoEncomenda vetorEncomendas[MAX_ENCOMENDAS], int quantEncomendas);
 
 void guardarFicheiro (tipoVeiculo vetorVeiculos[MAX_VEICULOS], int quantVeiculos, tipoEncomenda vetorEncomenda[MAX_ENCOMENDAS], int quantEncomendas);
 void lerFicheiro (tipoVeiculo vetorVeiculos[MAX_VEICULOS], int *quantVeiculos, tipoEncomenda vetorEncomendas[MAX_ENCOMENDAS], int *quantEncomendas);
@@ -136,13 +141,13 @@ int main(void)
 				switch (subOpc)
 				{
 				case 1: // carregamento de encomendas
-
+						
 					break;
 				case 2: // inicio de viagem
-
+						declararInicioDeViagem(vetorVeiculos, quantVeiculos);
 					break;
 				case 3: // regresso de viagem
-
+						declararRegressoDeViagem(vetorVeiculos, quantVeiculos);
 					break;
 				case 4: // descarregamento de encomendas
 
@@ -170,7 +175,10 @@ int main(void)
 
 					break;
 				case 5: // destinos com mais encomendas
-
+					destinosComMaisEncomendas(vetorEncomendas, quantEncomendas);
+				break;
+				case 6: //encomendas numa determinada data
+					encomendaPorData(vetorEncomendas, quantEncomendas);
 				break;
 				}
 			}
@@ -321,6 +329,50 @@ int procuraVeiculo (tipoVeiculo vetorVeiculos[MAX_VEICULOS], int quantVeiculos, 
 	}
 
 	return posicao;
+}
+
+void declararInicioDeViagem(tipoVeiculo vetorVeiculos[MAX_VEICULOS],int quantVeiculos)
+{
+	int posicao;
+	do
+	{
+		printf("\n\n----------- INICIO VIAGEM -----------  \n");
+		lerMatricula("\nMATRICULA: ", vetorVeiculos[quantVeiculos].matricula, 1);
+
+		posicao = procuraVeiculo(vetorVeiculos, quantVeiculos, vetorVeiculos[quantVeiculos].matricula);
+
+		if (posicao == NAO_EXISTE)  // matricula n�o existe no vetor
+		{
+			printf("\n\nATENCAO: O veiculo com essa matricula não existe: %s\n", vetorVeiculos[quantVeiculos].matricula);
+		}
+		else
+		{
+			vetorVeiculos[posicao].estado=1;
+		}
+	}
+	while (posicao != NAO_EXISTE);
+}
+
+void declararRegressoDeViagem(tipoVeiculo vetorVeiculos[MAX_VEICULOS],int quantVeiculos)
+{
+	int posicao;
+	do
+	{
+		printf("\n\n----------- INICIO VIAGEM -----------  \n");
+		lerMatricula("\nMATRICULA: ", vetorVeiculos[quantVeiculos].matricula, 1);
+
+		posicao = procuraVeiculo(vetorVeiculos, quantVeiculos, vetorVeiculos[quantVeiculos].matricula);
+
+		if (posicao == NAO_EXISTE)  // matricula n�o existe no vetor
+		{
+			printf("\n\nATENCAO: O veiculo com essa matricula não existe: %s\n", vetorVeiculos[quantVeiculos].matricula);
+		}
+		else
+		{
+			vetorVeiculos[posicao].estado=2;
+		}
+	}
+	while (posicao != NAO_EXISTE);
 }
 
 ///////////////////////////////////////////FUNÇOES ENCOMENDAS/////////////////////////////////////////////////////////
@@ -564,8 +616,56 @@ void pesoMedioEncomendas(tipoEncomenda vetorEncomendas[MAX_ENCOMENDAS], int quan
 	printf("Peso Médio das encomendas: %.2f kg",pesoMediaEncomendas);
 }
 
+void destinosComMaisEncomendas(tipoEncomenda vetorEncomendas[MAX_ENCOMENDAS], int quantEncomendas)
+{
+	char strTotal[TEXTO_LONGO*100]= "";
+	int i,j,count=0; 
 
+	for(i=0;i<quantEncomendas; i++)
+	{
+		strcat(strTotal,vetorEncomendas[i].destino);
+	}
+	//printf("strlen %d\n",strlen(strTotal));
+   	for(i=0; i<strlen(strTotal) ; i++)
+	{
+		for(j=0; j<strlen(strTotal) ; j++){			
+			if(strTotal[i] == vetorEncomendas[j].destino[j] && i < strlen(vetorEncomendas[j].destino))
+			{
+				count++;		
+				printf("\nDESTINO: %s, Nº DE VEZES: %d\n", vetorEncomendas[i].destino,count);
+			}
+		}
+	}
+}
 
+void encomendaPorData (tipoEncomenda vetorEncomendas[MAX_ENCOMENDAS], int quantEncomendas)
+{
+	tipoData dataEscolhida;
+
+	dataEscolhida = lerData();
+
+    int i,posicao=-1;
+    for (i=0; i<quantEncomendas; i++)
+    {
+        if (vetorEncomendas[i].dataRegisto.dia==0 && vetorEncomendas[i].dataRegisto.mes==0 && vetorEncomendas[i].dataRegisto.ano==0)
+        {
+            posicao=i;
+            i=quantEncomendas;
+        }
+    }
+
+	if (posicao==-1)
+    {
+        printf("\n Data de avaria nao encontrada.\n");
+    }
+    else
+    {
+        printf("A encomenda foi encontrada com sucesso!");
+		escreveDadosEncomenda(vetorEncomendas[posicao],0);
+    }
+
+    
+}
 
 // -------------- FUNCOES LER e ESCREVER FICHEIRO ----------------
 
