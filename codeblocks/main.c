@@ -6,7 +6,6 @@
 #define NAO_EXISTE -1    // Valor devolvido pelas fun��es procurar(...)
 #define ESTADO_DISPONIVEL 1
 #define ESTADO_INDISPONIVEL 0
-#define ESTADO_POR_APAGAR -2
 
 
 #define ANO_MIN 1900
@@ -39,13 +38,15 @@ typedef struct
 	int numeroRegisto; // valor unico
 	tipoData dataRegisto;
 	int pesoEncomenda;
-	int estado; // 0 - por expedir || 1 - expedido || 2 - devolvido
+	int estado; // 0 - por expedir || 1 - expedido || 2 - entregue || 3- - devolvido
 	tipoData dataEntregaOuDevolucao;
 	char destino[TEXTO_LONGO];
 	char observacoesEncomenda[TEXTO_LONGO];
 } tipoEncomenda;
 
 //Declaração das funções
+float calculos(tipoEncomenda vetorEncomendas[MAX_ENCOMENDAS], int quantEncomendas);
+
 tipoData lerData (void);
 void escreveData (tipoData data);
 
@@ -71,12 +72,15 @@ int main(void)
 	tipoVeiculo vetorVeiculos[MAX_VEICULOS];
 	tipoEncomenda vetorEncomendas[MAX_ENCOMENDAS];
 
+
 	char opc;
-	int subOpc, quantVeiculos, quantEncomendas;
+	int subOpc, quantVeiculos = 0, quantEncomendas = 0, quantEncomendasDevolvidas = 0;
+	float percEncomendasEntregues=0.0;
 
 	do
 	{
-		opc = menu();
+		percEncomendasEntregues=calculos(vetorEncomendas, quantEncomendas);
+		opc = menu(quantVeiculos, quantEncomendas, percEncomendasEntregues, quantEncomendasDevolvidas);
 		switch (opc)
 		{
 		case 'V':
@@ -130,13 +134,13 @@ int main(void)
 				switch (subOpc)
 				{
 				case 1: // carregamento de encomendas
-					
+
 					break;
 				case 2: // inicio de viagem
-					
+
 					break;
 				case 3: // regresso de viagem
-					
+
 					break;
 				case 4: // descarregamento de encomendas
 
@@ -145,15 +149,59 @@ int main(void)
 			}
 			while (subOpc != 0);
 			break;
-				case 'G': //guardar ficheiro
-					guardarFicheiro(vetorVeiculos, quantVeiculos, vetorEncomendas, quantEncomendas);
+		case 'D':
+			do
+			{
+				subOpc = menuEstatisticas(); // chama o menu dos encomendas
+				switch (subOpc)
+				{
+				case 1: // peso medio das encomendas
+					
+
 					break;
-				case 'L': //ler ficheiro
-					lerFicheiro (vetorVeiculos, &quantVeiculos, vetorEncomendas, &quantEncomendas);
+				case 2: // qtd de encomendas por veiculo
+
 					break;
-		}
+				case 3: // carga media dos veiculos em viagem
+
+					break;
+				case 4: // matricula dos veiculos com menos viagens feitas
+
+					break;
+				case 5: // destinos com mais encomendas
+
+				break;
+				}
+			}
+			while (subOpc != 0);
+			break;
+		case 'G': //guardar ficheiro
+			guardarFicheiro(vetorVeiculos, quantVeiculos, vetorEncomendas, quantEncomendas);
+			break;
+		case 'L': //ler ficheiro
+			lerFicheiro (vetorVeiculos, &quantVeiculos, vetorEncomendas, &quantEncomendas);
+			break;
+	}
 	}
 	while (opc != 'S');
+}
+
+//função que permite calcular dados estatisticos do menu principal
+float calculos(tipoEncomenda vetorEncomendas[MAX_ENCOMENDAS], int quantEncomendas)
+{
+	int i, count = 0;
+	float percEncomendasEntregues=0.0;
+	for (i=0; i < quantEncomendas; i++)
+	{
+		if (vetorEncomendas[i].estado == 2)
+		{
+			count++;
+		}
+	}
+
+	percEncomendasEntregues = (float) (count*100)/quantEncomendas;
+
+	return percEncomendasEntregues;
 }
 
 ///////////////////////////////////////////FUNÇOES VEICULOS/////////////////////////////////////////////////////////
@@ -412,14 +460,14 @@ void eliminarEncomenda(tipoEncomenda vetorEncomendas[MAX_ENCOMENDAS], int *quant
 
 	posicao = procuraEncomenda(vetorEncomendas, *quantEncomendas, vetorEncomendas[*quantEncomendas].numeroRegisto);
 
-	
+
 	if (posicao == NAO_EXISTE)  // Encomenda nao existe no vetor
 	{
 		printf("\n\nATENCAO: A encomenda com esse num de registo não existe: %d\n", vetorEncomendas[*quantEncomendas].numeroRegisto);
 	}
 	else
 	{
-		for (i=posicao; i < *quantEncomendas-1; i++) 
+		for (i=posicao; i < *quantEncomendas-1; i++)
 		{
 		vetorEncomendas[i] = vetorEncomendas[i+1];
 		}
@@ -431,7 +479,7 @@ void eliminarEncomenda(tipoEncomenda vetorEncomendas[MAX_ENCOMENDAS], int *quant
 //função para eliminar encomenda
 void alterarDestinoEncomenda(tipoEncomenda vetorEncomendas[MAX_ENCOMENDAS], int *quantEncomendas)
 {
-	int posicao, i;
+	int posicao;
 
 	printf("\n\n----------- EDITAR DESTINO ENCOMENDA -----------  \n");
 
@@ -496,6 +544,13 @@ tipoData lerData (void)
 	data.dia = lerInteiro("Dia: ", 1, diaMax);
 	return data;
 }
+
+
+// -------------- FUNCOES ESTATISTICAS ----------------
+
+
+
+
 
 // -------------- FUNCOES LER e ESCREVER FICHEIRO ----------------
 
@@ -597,4 +652,3 @@ void lerFicheiro (tipoVeiculo vetorVeiculos[MAX_VEICULOS], int *quantVeiculos, t
 		fclose(ficheiro);
 	}
 }
-

@@ -66,12 +66,20 @@
 	"funcoesMenus.h"
 	"funcoesAuxiliares.h"
 
-1513444042 source:/home/diogomachado/works/programacao-i/codeblocks/funcoesAuxiliares.c
+1513527791 source:/home/diogomachado/works/programacao-i/codeblocks/funcoesAuxiliares.c
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
 	<ctype.h>
 	"funcoesAuxiliares.h"
 
-1513444042 /home/diogomachado/works/programacao-i/codeblocks/funcoesAuxiliares.h
+1513527809 /home/diogomachado/works/programacao-i/codeblocks/funcoesAuxiliares.h
+
+1513643600 source:/home/diogomachado/works/programacao-i/codeblocks/funcoesMenus.c
+	<stdio.h>
+	<ctype.h>
+	"funcoesMenus.h"
+	"funcoesAuxiliares.h"
+
+1513643537 /home/diogomachado/works/programacao-i/codeblocks/funcoesMenus.h
 

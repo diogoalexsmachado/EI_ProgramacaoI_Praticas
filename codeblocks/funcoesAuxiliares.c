@@ -38,7 +38,7 @@ void lerString(char msg[TEXTO_LONGO], char str[TEXTO_LONGO], int tamanho)
     while (tamTexto <= 1);
 }
 
-int lerMatricula(char msg[TEXTO_LONGO], char str[TEXTO_LONGO], int isSearch)
+void lerMatricula(char msg[TEXTO_LONGO], char str[TEXTO_LONGO], int isSearch)
 {
     int tamTexto;
 
@@ -73,8 +73,6 @@ int lerMatricula(char msg[TEXTO_LONGO], char str[TEXTO_LONGO], int isSearch)
         }
     }
     while (tamTexto != 9);
-
-
 }
 
 int lerInteiro (char msg[TEXTO_LONGO], int limMin, int limMax)

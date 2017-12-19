@@ -4,14 +4,17 @@
 #include "funcoesMenus.h"
 #include "funcoesAuxiliares.h"
 
-char menu ()
+char menu (int quantVeiculos, int quantEncomendas, float percEncomendasEntregues, int quantEncomendasDevolvidas)
 {
     char opc;
     printf("\n\n\n\n-------------------------------------------------------------------------\n");
+    printf("# Veiculos: %d\t\t# Encomendas Devolvidas: %d\n", quantVeiculos, quantEncomendasDevolvidas);
+    printf("# Encomendas: %d\t\t# Percentagem Encomendas Entregues: %.2f%%\n", quantEncomendas, percEncomendasEntregues);
     printf("\n\n------------ MENU PRINCIPAL ---------------------------------------------\n");
     printf("\n\tV - Gerir Veiculos\n");
     printf("\tE - Gerir Encomendas\n");
     printf("\tR - Registos\n");
+    printf("\tD - Dados Estatisticos\n");
     printf("\n\tG - Guardar no Ficheiro\n");
     printf("\tL - Ler do Ficheiro\n");
     printf("\n\tS - Sair do Programa\n");
@@ -20,12 +23,12 @@ char menu ()
         printf("\n\t\tOPCAO --> ");
         scanf(" %c", &opc);
         opc = toupper(opc);
-        if (opc != 'V' && opc != 'E' && opc != 'S' && opc != 'G' && opc != 'L' && opc != 'R')
+        if (opc != 'V' && opc != 'E' && opc != 'S' && opc != 'G' && opc != 'L' && opc != 'R' && opc != 'D')
         {
             printf("\nERRO: opcao desconhecida. Tente novamente.\n");
         }
     }
-    while (opc != 'V' && opc != 'E' && opc != 'S' && opc != 'G' && opc != 'L' && opc != 'R');
+    while (opc != 'V' && opc != 'E' && opc != 'S' && opc != 'G' && opc != 'L' && opc != 'R' && opc != 'D');
     return opc;
 }
 
@@ -67,6 +70,21 @@ char menuRegistos ()
     printf("\t2 - Inicio de Viagem\n");
     printf("\t3 - Regresso de Viagem\n");
     printf("\t4 - Descarregamento de Encomendas\n");
+    printf("\n\t0 - VOLTAR ATRAS\n");
+    opc = lerInteiro("\n\t\tOPCAO --> ", 0, 4);
+    return opc;
+}
+
+char menuEstatisticas ()
+{
+    char opc;
+    printf("\n\n\n\n-------------------------------------------------------------------------\n");
+    printf("\n\n------------ MENU ESTATISTICAS ---------------------------------------------\n\n");
+    printf("\t1 - Peso medio das encomendas\n");
+    printf("\t2 - Quantidade de encomendas entregues numa determinada data\n");
+    printf("\t3 - Carga média dos veículos em viagem\n");
+    printf("\t4 - Matrícula do(s) veículo(s) com menos viagens efetuadas\n");
+    printf("\t5 - Destino(s) com maior quantidade de encomendas entregues\n\n");
     printf("\n\t0 - VOLTAR ATRAS\n");
     opc = lerInteiro("\n\t\tOPCAO --> ", 0, 4);
     return opc;
